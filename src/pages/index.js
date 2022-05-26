@@ -5,15 +5,15 @@ const IndexPage = () => {
     <main>
       <header>
         <h1>
-          <span role="img" aria-label="Red circle + women presenter emoji">
-            🔴&nbsp;👩‍🏫&nbsp;
+          <span role="img" aria-label="Red circle + pirate flag">
+            🔴&nbsp;🏴‍☠️&nbsp;
           </span>
-          Live Screencast Template
-          <span role="img" aria-label="Women presenter + red circle emoji">
-            &nbsp;👩‍🏫&nbsp;🔴
+          Paginating through Cloudinary API results when sourcing content with
+          Gatsby
+          <span role="img" aria-label="pirate flag + red circle emoji">
+            &nbsp;🏴‍☠️&nbsp;🔴
           </span>
         </h1>
-        <p>A template for Live Screencasts...</p>
       </header>
     </main>
   );

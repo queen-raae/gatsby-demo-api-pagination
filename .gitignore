@@ -14,3 +14,7 @@ package-lock.json
 # Gatsby cache and public
 .cache
 public/
+
+# Env
+.env.*
+!.env.example
