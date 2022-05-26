@@ -6,34 +6,45 @@ cloudinary.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-const createCloudinaryNodes = async (gatsbyUtils) => {
+const createCloudinaryNodes = async (gatsbyUtils, { limit }) => {
   const { actions, reporter, createNodeId, createContentDigest } = gatsbyUtils;
   const { createNode } = actions;
 
-  const result = await cloudinary.api.resources({
-    resource_type: "image",
-  });
+  let nextCursor = null;
 
-  reporter.info(`Fetched Cloudinary Assets >>> ${result.resources.length}`);
-
-  result.resources.forEach((resource) => {
-    reporter.info(`Create CloudinaryAsset >>> ${resource.public_id}`);
-    createNode({
-      id: createNodeId(resource.public_id),
-      ...resource,
-      internal: {
-        type: "CloudinaryAsset",
-        content: JSON.stringify(resource),
-        contentDigest: createContentDigest(resource),
-      },
+  do {
+    const result = await cloudinary.api.resources({
+      resource_type: "image",
+      max_results: limit < 10 ? limit : 10,
+      next_cursor: nextCursor,
     });
-  });
+
+    reporter.info(
+      `Fetched Cloudinary Assets >>> ${result.resources.length} from ${nextCursor}`
+    );
+
+    result.resources.forEach((resource) => {
+      reporter.info(`Create CloudinaryAsset >>> ${resource.public_id}`);
+      createNode({
+        id: createNodeId(resource.public_id),
+        ...resource,
+        internal: {
+          type: "CloudinaryAsset",
+          content: JSON.stringify(resource),
+          contentDigest: createContentDigest(resource),
+        },
+      });
+    });
+
+    nextCursor = result.next_cursor;
+    limit = limit - 10;
+  } while (nextCursor && limit > 0);
 };
 
 exports.sourceNodes = async (gatsbyUtils) => {
   const { reporter } = gatsbyUtils;
 
   reporter.info("Sourcing nodes - START");
-  await createCloudinaryNodes(gatsbyUtils);
+  await createCloudinaryNodes(gatsbyUtils, { limit: 27 });
   reporter.info("Sourcing nodes - DONE");
 };
