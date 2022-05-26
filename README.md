@@ -1,6 +1,9 @@
 ## Paginating through Cloudinary API results when sourcing content with Gatsby
 
-- [🔴 👩‍🏫 Watch the Live Screencast on YouTube](https://youtu.be/y2oIg8xvWC0)
+- [🔴 👩‍🏫 Watch the Live Stream on YouTube](https://youtu.be/y2oIg8xvWC0)
+
+- [Pull Request for the Recursion Approach](https://github.com/queen-raae/gatsby-demo-api-pagination/pull/1)
+- [Pull Request for the Loop Approach](https://github.com/queen-raae/gatsby-demo-api-pagination/pull/2)
 
 &nbsp;
 
